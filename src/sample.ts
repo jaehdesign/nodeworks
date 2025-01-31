@@ -1,5 +1,7 @@
-import { foo } from './module.js';
 import 'dotenv/config';
+import './exe.js';
+import { foo } from './module.js';
+
 const x = 'Hola';
 console.log(x);
 foo();
@@ -19,7 +21,7 @@ const connect = (db_Uri: string) => {
 let db_Uri = '';
 if (mode === 'dev') {
     console.log('Estamos en desarrollo');
-    const port = process.env.DB_PORT;
+    const port = process.env.DB_PORT_PROD;
     db_Uri = `http://producction.com:${port}`;
     console.log(process.env.DB_PORT);
     console.log(process.env.DB_PASSWORD);
@@ -32,7 +34,14 @@ if (mode === 'dev') {
 }
 connect(db_Uri);
 
-console.log('Hello'); //Hello;
-process.stdout.write('Hello\n'); //Hello;
-console.error('Error'); //Error;
-process.stderr.write('Error\n'); //Error;
+console.log('Hello!');
+process.stdout.write('Hello!\n');
+console.error('Error!');
+process.stderr.write('Error!\n');
+
+process.stdout.write('Dinos tu nombre: ');
+process.stdin.on('data', (data) => {
+    const name = data.toString().trim();
+    process.stdout.write(`Hello, ${name}!\n`);
+    process.exit(0);
+});
