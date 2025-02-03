@@ -1,19 +1,34 @@
 import inquirer from 'inquirer';
+import { UnnamedDistinctQuestion } from 'inquirer/dist/commonjs/types';
 
-const questions = [
+type Question = UnnamedDistinctQuestion & {
+    name: string;
+};
+
+const questions: Question[] = [
+    { type: 'input', name: 'name', message: '¿Cuál es tu nombre?' },
+    { type: 'number', name: 'age', message: '¿Qué edad tienes?' },
+    { type: 'password', name: 'password', message: '¿Cuál es tu password?' },
     {
         type: 'list',
-        name: 'name',
-        message: 'What is your name?',
+        name: 'color',
+        message: '¿Cuál es tu color favorito?',
+        choices: ['Rojo', 'Azul', 'Verde'],
     },
     {
-        type: 'input',
-        name: 'age',
-        message: 'How old are you?',
+        type: 'checkbox',
+        name: 'courses',
+        message: '¿Qué cursos te interesan?',
+        choices: ['Angular', 'React', 'Astro.js', 'Vue.js', 'Svelte'],
     },
     {
-        type: 'input',
-        name: 'city',
-        message: 'Where do you live?',
+        type: 'confirm',
+        name: 'confirm',
+        message: '¿Estas seguro?',
+        default: false,
     },
 ];
+
+inquirer.prompt(questions).then((answers) => {
+    console.log(answers);
+});

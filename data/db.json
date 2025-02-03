@@ -1,24 +1,30 @@
 {
     "notes": [
-        {
-            "id": "1",
-            "content": "Content 1"
-        },
-        {
-            "id": "2",
-            "content": "Content 2"
-        },
-        {
-            "id": "3",
-            "content": "Content 3"
-        }
+        { "id": "a06ea5d9", "content": "Content 2" },
+        { "id": "b06ea5d9", "content": "Content 3" },
+        { "content": "Nota 3", "id": "08a8a618" }
     ],
     "users": [
         {
             "id": 1,
-            "name": "John Doe",
+            "name": "admin",
             "email": "",
-            "password": ""
+            "password": "admin",
+            "role": "admin"
+        },
+        {
+            "id": 2,
+            "name": "user",
+            "email": "",
+            "password": "user",
+            "role": "user"
+        },
+        {
+            "id": 2,
+            "name": "user",
+            "email": "",
+            "password": "user",
+            "role": "user"
         }
     ]
 }

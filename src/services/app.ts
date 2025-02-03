@@ -1,39 +1,17 @@
-// DESARROLLO DEL CÓDIGO
+// Todos las interfaces de los métodos definen en retorno como promesas
+// - TypeODM
+// - Repository
 
-// Creamos la interfaz ODM genérica
-// ODM (Object Document Mapper) es un patrón de diseño que
-// mapea objetos de datos en documentos de base de datos
+import { RepoNoteFile } from './repo-notes-file.js';
+const repo = new RepoNoteFile();
+// Las funciones helpers son async y retornan promesas
 
-// Modelando los métodos CRUD de un repositorio de datos
-// Simplificando la forma en que los llevaría a cabo un ORM
+// La clase ODMLite pasa a ser ODMLiteAsync
 
-// Debemos considerar si la collection será:
-// parámetro de los métodos CRUD
-// propiedad de la clase ORM y por tanto del constructor
+// Los test de ODMLite pasan a ser async
 
-// En types.d.ts
-
-// Como mocks, generamos funciones de lectura escritura capaces de leer y escribir en un almacenamiento (e,g, Fichero)
-// import { readFromDisk, writeToDisk } from './helpers';
-
-// Creamos una clase que implementa la interfaz ORM
-// import { ORMLite } from './orm-lite';
-
-// Necesitaremos algunas utilidades de tipos de TypeScript
-// Partial<T> para definir un tipo con todas las propiedades de T como opcionales
-// Omit<T, K> para definir un tipo sin las propiedades de K
-
-// Cream9os una interfaz Repository que define los métodos CRUD
-
-// En types.d.ts
-
-// Como mock de modelo de datos generamos una interfaz/tipo Item
-
-// En types.d.ts
-
-// Creamos una clase que implementa la interfaz Repository
-
-// import { RepoNoteFile } from './repo-notes-file.js';
-
-// const repo = new RepoNoteFile();
-// repo.read.then(console.log);
+repo.read().then(console.log);
+// repo.readById('d056d7d9').then(console.log);
+// repo.create({ content: 'Nota 3' }).then(console.log);
+// repo.update('d056d7d9', { content: 'Nota 3 Updated' }).then(console.log);
+// repo.delete('d056d7d9').then(console.log);

@@ -1,28 +1,32 @@
 import { ODMLite } from '../odm/odm-lite.js';
-import { Note } from '../types/types.js';
-import { Repository, TypeODM } from '../types/types.js';
+import type { Note } from '../types/types.js';
+import type { Repository, TypeODM } from '../types/types.js';
 
 export class RepoNoteFile implements Repository<Note> {
-    orm: TypeODM<Note>;
+    odm: TypeODM<Note>;
     collection: string;
     constructor(file = 'db.json', collection = 'notes') {
-        this.orm = new ODMLite<Note>(file);
+        this.odm = new ODMLite<Note>(file);
         this.collection = collection;
     }
 
-    read() {
-        return this.orm.read(this.collection);
+    async read(): Promise<Note[]> {
+        const data = await this.odm.read(this.collection);
+        return data;
     }
-    readById(id: string) {
-        return this.orm.readById(this.collection, id);
+    async readById(id: string) {
+        return await this.odm.readById(this.collection, id);
     }
-    create(data: Omit<Note, 'id'>) {
-        return this.orm.create(this.collection, data);
+    async create(data: Omit<Note, 'id'>) {
+        return await this.odm.create(this.collection, data);
     }
-    update(id: string, data: Partial<Omit<Note, 'id'>>) {
-        return this.orm.updateById(this.collection, id, data);
+    async update(id: string, data: Partial<Omit<Note, 'id'>>) {
+        return await this.odm.updateById(this.collection, id, data);
     }
-    delete(id: string) {
-        return this.orm.deleteById(this.collection, id);
+    async delete(id: string) {
+        return await this.odm.deleteById(this.collection, id);
     }
 }
+
+// const repo = new RepoNoteFile()
+// repo.read().then(console.log);

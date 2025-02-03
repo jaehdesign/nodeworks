@@ -1,5 +1,3 @@
-//import { resolve } from 'path';
-
 import { resolve, join } from 'path';
 import fs from 'fs';
 

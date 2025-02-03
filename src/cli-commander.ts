@@ -1,15 +1,66 @@
 import { join, resolve } from 'node:path';
 import { program } from 'commander';
-import { RepoNoteFile } from './services/repo-notes-file';
+import { RepoNoteFile } from './services/repo-notes-file.js';
 
-const dataBase = resolve('../dataBase');
+const dataBase = resolve('../data'); // dist
 const file = join(dataBase, 'db.json');
 const repo = new RepoNoteFile(file);
+
 program.name('CLI').description(`CLI sample`).version('1.0.0');
 
 const readAll = async () => {
-    const data = await repo.read();
-    console.table(data);
+    try {
+        const data = await repo.read();
+        console.table(data);
+    } catch (error) {
+        console.error((error as Error).message);
+    }
+};
+
+const findNote = async (content: string) => {
+    try {
+        const data = await repo.read();
+        const notes = data.filter((note) => note.content.includes(content));
+        if (!notes.length) {
+            throw new Error('Nota no encontrada');
+        }
+        console.table(notes);
+    } catch (error) {
+        console.error((error as Error).message);
+    }
+};
+
+const addNote = async (content: string) => {
+    const newNote = { content: content };
+    try {
+        const finalNote = await repo.create(newNote);
+        console.log('Nota añadida', finalNote);
+    } catch (error) {
+        console.error((error as Error).message);
+    }
+};
+
+const updateNote = async (content: string, { id }: { id: string }) => {
+    const updatedNote = { content: content };
+    try {
+        const finalNote = await repo.update(id, updatedNote);
+        console.log('Nota actualizada', finalNote);
+    } catch (error) {
+        if (error instanceof Error) {
+            console.error(error.message);
+        } else {
+            console.error('Error desconocido', error);
+        }
+    }
+};
+
+const deleteNote = async ({ id }: { id: string }) => {
+    try {
+        const deletedNote = await repo.delete(id);
+        console.log('Nota borrada', deletedNote);
+    } catch (error) {
+        console.error((error as Error).message);
+    }
 };
 
 program.command('all').description('Mostrar todas las notas').action(readAll);
@@ -17,32 +68,19 @@ program.command('all').description('Mostrar todas las notas').action(readAll);
 //     repo.read().then((data) => {
 //         console.table(data);
 //     });
-//     console.log('Show all');
 // });
 
 program
+    // .command('find <key>')
     .command('find')
-    .argument('<key>', 'texto para buscar nota')
+    .argument('<key>', 'texto para buscar la nota')
     .description('Mostrar las notas encontradas')
-    .action((key: string) => {
-        console.log('Show notes with', key);
-    });
+    .action(findNote);
 
-program
-    .command('add <note>')
-    .description('')
-    .action((note: string) => {
-        console.log('Add note', note);
-    });
+program.command('add <note>').description('Añadir una nota').action(addNote);
 
-// program.command('update <id> <note>');
-program
-    .command('update <note>')
-    .option('-i --id -<id>')
-    .action((note: string, { id }: { id: string }) => {
-        console.log('Update note', note, 'with id', id);
-    });
+program.command('update <note>').option('-i, --id <id>').action(updateNote);
 
-program.command('delete <id>');
+program.command('delete').option('-i, --id <id>').action(deleteNote);
 
 program.parse();

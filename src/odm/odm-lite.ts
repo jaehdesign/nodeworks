@@ -1,5 +1,5 @@
 import { readFile, writeFile } from 'node:fs/promises';
-import { TypeODM } from '../types/types';
+import type { TypeODM } from '../types/types';
 
 export class ODMLite<T extends { id: string }> implements TypeODM<T> {
     file: string;
@@ -8,7 +8,7 @@ export class ODMLite<T extends { id: string }> implements TypeODM<T> {
     }
 
     private async readDB(): Promise<Record<string, T[]>> {
-        const txtData = await readFile(this.file, 'utf-8'); // Cambio
+        const txtData = await readFile(this.file, 'utf-8');
         return JSON.parse(txtData);
     }
 
