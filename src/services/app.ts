@@ -32,9 +32,8 @@
 // En types.d.ts
 
 // Creamos una clase que implementa la interfaz Repository
-import { RepoItemFile } from './repo-item-file';
 
-// Instanciamos la clase y leemos los datos
+// import { RepoNoteFile } from './repo-notes-file.js';
 
-const repo = new RepoItemFile();
-console.log(repo.read());
+// const repo = new RepoNoteFile();
+// repo.read.then(console.log);

@@ -1,11 +1,12 @@
-import { ODMLite } from './odm-lite';
-import
+import { ODMLite } from '../odm/odm-lite.js';
+import { Note } from '../types/types.js';
+import { Repository, TypeODM } from '../types/types.js';
 
-export class RepoItemFile implements Repository<Item> {
-    orm: TypeODM<Item>;
+export class RepoNoteFile implements Repository<Note> {
+    orm: TypeODM<Note>;
     collection: string;
-    constructor(file = 'db.json', collection = 'items') {
-        this.orm = new ODMLite<Item>(file);
+    constructor(file = 'db.json', collection = 'notes') {
+        this.orm = new ODMLite<Note>(file);
         this.collection = collection;
     }
 
@@ -15,10 +16,10 @@ export class RepoItemFile implements Repository<Item> {
     readById(id: string) {
         return this.orm.readById(this.collection, id);
     }
-    create(data: Omit<Item, 'id'>) {
+    create(data: Omit<Note, 'id'>) {
         return this.orm.create(this.collection, data);
     }
-    update(id: string, data: Partial<Omit<Item, 'id'>>) {
+    update(id: string, data: Partial<Omit<Note, 'id'>>) {
         return this.orm.updateById(this.collection, id, data);
     }
     delete(id: string) {

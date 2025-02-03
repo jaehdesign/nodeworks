@@ -1,3 +1,4 @@
+"use strict";
 // DESARROLLO DEL CÓDIGO
 // Creamos la interfaz ODM genérica
 // ODM (Object Document Mapper) es un patrón de diseño que
@@ -20,7 +21,6 @@
 // Como mock de modelo de datos generamos una interfaz/tipo Item
 // En types.d.ts
 // Creamos una clase que implementa la interfaz Repository
-import { RepoItemFile } from './repo-item-file';
-// Instanciamos la clase y leemos los datos
-const repo = new RepoItemFile();
-console.log(repo.read());
+// import { RepoNoteFile } from './repo-notes-file.js';
+// const repo = new RepoNoteFile();
+// repo.read.then(console.log);

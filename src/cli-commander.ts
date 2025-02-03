@@ -1,13 +1,24 @@
+import { join, resolve } from 'node:path';
 import { program } from 'commander';
+import { RepoNoteFile } from './services/repo-notes-file';
 
+const dataBase = resolve('../dataBase');
+const file = join(dataBase, 'db.json');
+const repo = new RepoNoteFile(file);
 program.name('CLI').description(`CLI sample`).version('1.0.0');
 
-program
-    .command('all')
-    .description('Mostrar todas las notas')
-    .action(() => {
-        console.log('Show all');
-    });
+const readAll = async () => {
+    const data = await repo.read();
+    console.table(data);
+};
+
+program.command('all').description('Mostrar todas las notas').action(readAll);
+// .action(() => {
+//     repo.read().then((data) => {
+//         console.table(data);
+//     });
+//     console.log('Show all');
+// });
 
 program
     .command('find')
